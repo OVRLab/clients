@@ -3,8 +3,8 @@
     One-time setup script to configure the GitHub Packages NPM token.
 
 .DESCRIPTION
-    Sets the NPM_TOKEN environment variable (user-level) so that .npmrc
-    can reference it via ${NPM_TOKEN} without ever hardcoding secrets in git.
+    Sets the NODE_AUTH_TOKEN environment variable (user-level) so that .npmrc
+    can reference it via ${NODE_AUTH_TOKEN} without ever hardcoding secrets in git.
 
 .EXAMPLE
     .\setup.ps1
@@ -27,13 +27,13 @@ if (-not $Token) {
 }
 
 # Set as a persistent user-level environment variable
-[System.Environment]::SetEnvironmentVariable("NPM_TOKEN", $Token, "User")
+[System.Environment]::SetEnvironmentVariable("NODE_AUTH_TOKEN", $Token, "User")
 
 # Also set it in the current session so it works immediately
-$env:NPM_TOKEN = $Token
+$env:NODE_AUTH_TOKEN = $Token
 
 Write-Host ""
-Write-Host "NPM_TOKEN has been set successfully!" -ForegroundColor Green
+Write-Host "NODE_AUTH_TOKEN has been set successfully!" -ForegroundColor Green
 Write-Host "  - Persisted to your user environment variables." -ForegroundColor DarkGray
 Write-Host "  - Available in this terminal session immediately." -ForegroundColor DarkGray
 Write-Host ""
