@@ -563,6 +563,10 @@ export class Main {
         return { success: false, error: String(error) };
       }
     });
+
+    // NOTE: PQP password derivation happens directly in renderer via
+    // PqpAuthService.getDerivedPassword() → authenticationService.derivePasswordForBitwarden()
+    // No IPC handler needed since context isolation is disabled for PQP.
   }
 
   private setupWebRtcHandlers(): void {
