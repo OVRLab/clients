@@ -564,9 +564,11 @@ export class Main {
       }
     });
 
-    // NOTE: PQP password derivation happens directly in renderer via
-    // PqpAuthService.getDerivedPassword() → authenticationService.derivePasswordForBitwarden()
-    // No IPC handler needed since context isolation is disabled for PQP.
+    // NOTE: PQP password derivation uses temporal scoping pattern (W50-266, W50-273).
+    // Renderer calls PqpAuthService.buildPqpLoginCredentials() or withDerivedPassword(),
+    // which delegate to authenticationService.withPassword(callback). Password is derived
+    // on-demand, passed to callback, and immediately discarded. No IPC handler needed
+    // since context isolation is disabled for PQP.
   }
 
   private setupWebRtcHandlers(): void {
